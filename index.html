@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAHHH</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #808080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .circle-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .circle-container:hover {
+            transform: scale(1.05);
+        }
+
+        .circle-container:active {
+            transform: scale(0.95);
+        }
+
+        .gradient-circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: #0a0a0a;
+            animation: spin 2s linear infinite;
+            box-shadow: 
+                0 0 60px rgba(255, 0, 128, 0.4),
+                inset 0 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Vinyl grooves - realistic circular patterns */
+        .gradient-circle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.02) 0px,
+                rgba(255, 255, 255, 0.02) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+        }
+
+        /* Center label with gradient */
+        .gradient-circle::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
+            background-size: 200% 200%;
+            animation: gradientRotate 3s ease infinite;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 128, 0.6),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Center hole */
+        .center-hole {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #000;
+            box-shadow: 
+                0 0 10px rgba(0, 0, 0, 0.8),
+                inset 0 0 10px rgba(0, 0, 0, 0.9);
+            z-index: 3;
+        }
+
+        .text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.8), 
+                0 0 10px rgba(255, 0, 128, 0.5);
+            user-select: none;
+            z-index: 2;
+            animation: counterSpin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes counterSpin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        @keyframes gradientRotate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .gradient-circle {
+                width: 250px;
+                height: 250px;
+            }
+
+            .text {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gradient-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .text {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .gradient-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .text {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle-container" id="circleContainer">
+        <div class="gradient-circle">
+            <div class="text">FAHHH</div>
+            <div class="center-hole"></div>
+        </div>
+    </div>
+
+    <audio id="audioPlayer" src="fah.mp3"></audio>
+
+    <script>
+        const circleContainer = document.getElementById('circleContainer');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        circleContainer.addEventListener('click', function() {
+            // Reset audio to start if it's already playing
+            if (!audioPlayer.paused) {
+                audioPlayer.currentTime = 0;
+            }
+            
+            // Play the audio
+            audioPlayer.play().catch(error => {
+                console.log('Audio playback failed:', error);
+            });
+        });
+    </script>
+</body>
+</html>
